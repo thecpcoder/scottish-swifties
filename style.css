@@ -1,1 +1,241 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
+html {
+    scroll-behavior: smooth;
+}
+
+.skip-nav-link {
+    background: rgb(244, 214, 148);
+    padding: .5rem 1.5rem;
+    border-radius: 0 0 .50rem .50rem;
+    position: absolute;
+    left: 0rem;
+    transform: translateY(-120%);
+    transition: ease-in-out 600ms;
+    color: #ffffff;
+    outline-color: transparent;
+    outline: 1px solid #000000;
+}
+
+.skip-nav-link:focus-visible {
+    transform: translateY(0);
+}
+
+body {
+    background-color: hsl(240, 3%, 7%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-size: clamp(.5rem, 2.5vmin, 1.5rem);
+}
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(20, minmax(auto, 1.25em));
+    grid-auto-rows: 3em;
+    gap: .25rem;
+    justify-content: center;
+}
+
+.key {
+    font-size: inherit;
+    grid-column: span 2;
+    border: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(
+        var(--hue, 200),
+        var(--saturation, 1%),
+        calc(var(--lightness-offset, 0%) + var(--lightness, 51%))
+    );
+    color: #ffffff;
+    fill: #ffffff;
+    text-transform: uppercase;
+    border-radius: 1.5em;
+    margin: .2em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.key.large {
+    grid-column: span 3;
+}
+
+.key:hover, .key:focus {
+    --lightness-offset: 10%;
+}
+
+.key.wrong {
+    --lightness: 23%;
+}
+
+.key.wrong-location {
+    --hue: 49;
+    --saturation: 51%;
+    --lightness: 47%;
+}
+
+.key.correct {
+    --hue: 115;
+    --saturation: 29%;
+    --lightness: 47%;
+
+}
+
+.guess-grid {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    grid-template-columns: repeat(5, 4em);
+    grid-template-rows: repeat(6, 4em);
+    gap: .30em;
+    margin-bottom: 1em;
+}
+
+.tile {
+    font-size: 2em;
+    color: white;
+    border: .05em solid hsl(240, 2%, 23%);
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    transition: transform 250ms linear;
+}
+
+.tile[data-state="active"] {
+    border-color: hsl(200, 1%, 34%);
+
+}
+
+.tile[data-state="wrong"] {
+    border: none;
+    background-color: hsl(240, 2%, 23%);    
+}
+
+.tile[data-state="wrong-location"] {
+    border: none;
+    background-color: hsl(49, 51%, 47%);    
+}
+
+.tile[data-state="correct"] {
+    border: none;
+    background-color: hsl(115, 29%, 43%);    
+}
+
+.tile.shake {
+    animation: shake 250ms ease-in-out;
+}
+
+.tile.dance {
+    animation: dance 250ms ease-in-out;
+}
+
+.tile.flip {
+    transform: rotateX('90deg');
+}
+
+@keyframes shake {
+    10% {
+        transform: translateX(-5%);
+    }
+
+    30% {
+        transform: translateX(5%);
+    }
+
+    50% {
+        transform: translateX(-7.5%);
+    }
+
+    70% {
+        transform: translateX(-7.5%);
+    }
+
+    90% {
+        transform: translateX(-5%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes dance {
+    20% {
+        transform: translateY(-50%);
+    }
+
+    40% {
+        transform: translateY(5%);
+    }
+
+    60% {
+        transform: translateY(-25%);
+    }
+
+    80% {
+        transform: translateY(2.5%);
+    }
+
+    90% {
+        transform: translateY(-5%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.alert-container {
+    position: fixed;
+    top: 10vh;
+    left: 50vw;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.alert {
+    pointer-events: none;
+    background-color: hsl(204, 7%, 85%);
+    padding: .75em;
+    border-radius: .25em;
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+    margin-bottom: .5em;
+}
+
+.alert:last-child {
+    margin-bottom: 0;
+}
+
+.alert.hide {
+    opacity: 0;
+}
+
+header {
+    border-bottom: 1px solid hsl(240, 3%, 7%);
+}
+
+.title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0.4rem 0 0.4rem 0;
+    text-align: center;
+}
