@@ -1,6 +1,6 @@
 const targetWords = [
-    "reptv"
-    "redtv"
+    "reptv",
+    "redtv",
     
 ]
 
